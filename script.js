@@ -11,7 +11,7 @@
 var startBtn = document.querySelector('.start-button');
 // var initialed = document.querySelector('#initialed-score');
 var timeEl = document.querySelector('.questionTimer');
-var question = document.querySelector('.questionContainer');
+// var question = document.querySelector('.questionContainer');
 
 var myQuestions = [
     {
@@ -89,9 +89,11 @@ function renderQuestion () {
     var questionText = myQuestions.questionText;
     var answers = myQuestions.answers;
     // load questions and answers into .questionContainer.
-    // var questionContainer = document.querySelector('.questionContainer');  
+    var questionContainer = document.querySelector('.questionContainer');  
+    // questions will show as h2
     var qText = document.createElement("h2");
-    question = qText.textContent = questionText;
+    qText.textContent = questionText;
+    // answers will be shown as list
     var answerList = document.createElement("ol");
     var answerItems = [];
 
@@ -110,33 +112,30 @@ function renderQuestion () {
 
 function startQuiz () {
     score = 0
-    timerCount = 55;
-    renderQuestion(myQuestions);
-
-    // if (myQuestions.correctAnswer1)
-
-    renderQuestions()
+    // timerCount = 55;
+    renderQuestion();
     startTimer()
 }
 
 function startTimer() {
     console.log("timer")
     // test timer
+    timerCount = 55;
     timer = setInterval(function() {
     timerCount--;
     timerEl.textContent = timerCount;
     if (timerCount >= 0) {
       
       if (quiz && timerCount > 0) {
-        
-        winGame();
+        clearInterval(timerCount);
+        correctAnswer();
       }
     }
-    // Tests if time has run out
+    
     if (timerCount === 0) {
-      // Clears interval
-      clearInterval(timer);
-      
+        clearInterval(timerCount)
+        wrongAnswer();
+        
     }
 }, 1000);
 }
@@ -159,6 +158,24 @@ function wrongAnswer () {
     timerCount-10
 }
 
+function setAnswers() {
+    win.textContent = winCounter;
+    localStorage.setItem("winCount", winCounter);
+  }
+
+  function getWins() {
+    // Get stored value from client storage, if it exists
+    var storedWins = localStorage.getItem("winCount");
+    // If stored value doesn't exist, set counter to 0
+    if (storedWins === null) {
+      winCounter = 0;
+    } else {
+      // If a value is retrieved from client storage set the winCounter to that value
+      winCounter = storedWins;
+    }
+    //Render win count to page
+    win.textContent = winCounter;
+  }
 
 
 startBtn.addEventListener('click', startQuiz);
