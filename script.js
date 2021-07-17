@@ -10,7 +10,7 @@
 // player is givent he option to clear scores or play again
 var startBtn = document.querySelector('.start-button');
 // var initialed = document.querySelector('#initialed-score');
-var timeEl = document.querySelector('.timer');
+var timeEl = document.querySelector('.questionTimer');
 var question = document.querySelector('.questionContainer');
 
 var myQuestions = [
@@ -20,7 +20,7 @@ var myQuestions = [
             a:'string',
             b:'boolean',
             c:'number',
-            d:'floater'
+            d:'floater',
         },
         correctAnswer1: 'd'      
 },
@@ -78,26 +78,28 @@ console.log(myQuestions);
 
 var questionTimer;
 var quiz = true;
+var timer;
 var timerCount;
 var score;
+// var isWin = true;
 var answer = [];
 
-function renderQuestion (myQuestions) {
+function renderQuestion () {
     console.log("place on page");
     var questionText = myQuestions.questionText;
     var answers = myQuestions.answers;
     // load questions and answers into .questionContainer.
-    var questionContainer = document.querySelector('.questionContainer').innerHTML;
-    
-    var qText = document.createElement("h2").innerHTML;
-    qText.textContent = myQuestions.questionText;
+    // var questionContainer = document.querySelector('.questionContainer');  
+    var qText = document.createElement("h2");
+    question = qText.textContent = questionText;
     var answerList = document.createElement("ol");
     var answerItems = [];
 
-    for(var i=0; i < myQuestions.answers.length; i++) {
+    // for loop for answers for each question
+    for(var i=0; i < answers.length; i++) {
         console.log("in answer loop");
         var answerItem = document.createElement("li");
-        answerItem = myQuestions.index = i
+        answerItem = myQuestions.correctAnswer
         answerItem.textContent = correctAnswer [i];
         answerlist.append(answerItem);
         console.log(answerlist);
@@ -113,20 +115,20 @@ function startQuiz () {
 
     // if (myQuestions.correctAnswer1)
 
-    // renderQuestions()
-    // startTimer()
+    renderQuestions()
+    startTimer()
 }
 
 function startTimer() {
-    console.log(timer)
+    console.log("timer")
+    // test timer
     timer = setInterval(function() {
     timerCount--;
     timerEl.textContent = timerCount;
     if (timerCount >= 0) {
-      // Tests if win condition is met
-      if (isWin && timerCount > 0) {
-        // Clears interval and stops timer
-        clearInterval(timer);
+      
+      if (quiz && timerCount > 0) {
+        
         winGame();
       }
     }
@@ -134,7 +136,7 @@ function startTimer() {
     if (timerCount === 0) {
       // Clears interval
       clearInterval(timer);
-      loseGame();
+      
     }
 }, 1000);
 }
@@ -156,10 +158,6 @@ function wrongAnswer () {
     score--
     timerCount-10
 }
-
-
-
-
 
 
 
