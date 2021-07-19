@@ -9,7 +9,7 @@
 // then the page takes you to the high scores section where your initial is input
 // player is givent he option to clear scores or play again
 var startBtn = document.querySelector('.start-button');
-// var initialed = document.querySelector('#initialed-score');
+var initialed = document.querySelector('#initialed-score');
 var timeEl = document.querySelector('.questionTimer');
 // var question = document.querySelector('.questionContainer');
 
@@ -93,16 +93,19 @@ function renderQuestion () {
     // questions will show as h2
     var qText = document.createElement("h2");
     qText.textContent = questionText;
-    // answers will be shown as list
+    // answers will be shown as ordered list
     var answerList = document.createElement("ol");
     var answerItems = [];
 
     // for loop for answers for each question
     for(var i=0; i < answers.length; i++) {
         console.log("in answer loop");
+        // answers in my array will be listed under ordered list
         var answerItem = document.createElement("li");
+        // answerItem will show my correctAnswer
         answerItem = myQuestions.correctAnswer
-        answerItem.textContent = correctAnswer [i];
+        var i = correctAnswer
+        answerItem.textContent = i;
         answerlist.append(answerItem);
         console.log(answerlist);
         answerItem.push(answerItem);
@@ -159,11 +162,11 @@ function wrongAnswer () {
 }
 
 function setAnswers() {
-    win.textContent = winCounter;
-    localStorage.setItem("winCount", winCounter);
+    initialed.textContent = score;
+    localStorage.setItem("Inital", score);
   }
 
-  function getWins() {
+function getWins() {
     // Get stored value from client storage, if it exists
     var storedWins = localStorage.getItem("winCount");
     // If stored value doesn't exist, set counter to 0
