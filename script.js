@@ -84,6 +84,7 @@ var score;
 // var isWin = true;
 var answer = [];
 
+// the first questions appears with abcd options
 function renderQuestion () {
     console.log("place on page");
     var questionText = myQuestions.questionText;
@@ -92,9 +93,10 @@ function renderQuestion () {
     var questionContainer = document.querySelector('.questionContainer');  
     // questions will show as h2
     var qText = document.createElement("h2");
-    qText.textContent = questionText;
+    qText.textContent = questionText.textContent;
     // answers will be shown as ordered list
     var answerList = document.createElement("ol");
+    // answers will be in an empty array
     var answerItems = [];
 
     // for loop for answers for each question
@@ -103,12 +105,12 @@ function renderQuestion () {
         // answers in my array will be listed under ordered list
         var answerItem = document.createElement("li");
         // answerItem will show my correctAnswer
-        answerItem = myQuestions.correctAnswer
+        answerItems = myQuestions.correctAnswer;
         var i = correctAnswer
-        answerItem.textContent = i;
-        answerlist.append(answerItem);
-        console.log(answerlist);
-        answerItem.push(answerItem);
+        answerItems.textContent = i;
+        answerList.append(answerItems);
+        console.log(answerList);
+        answerItem.push(answerItems);
     }
     questionContainer.append(qText, answerList);
 }
