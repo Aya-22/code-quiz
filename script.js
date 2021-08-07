@@ -11,6 +11,7 @@
 var startBtn = document.querySelector('.start-button');
 var initialed = document.querySelector('#initialed-score');
 var timeEl = document.querySelector('.questionTimer');
+var startPage = document.querySelector('.intro');
 // var question = document.querySelector('.questionContainer');
 
 var myQuestions = [
@@ -22,7 +23,7 @@ var myQuestions = [
             c:'number',
             d:'floater',
         },
-        correctAnswer1: 'd'      
+        correctAnswer: 'd'      
 },
     {
         questionText: "What is used after a console log?",
@@ -53,7 +54,7 @@ var myQuestions = [
             d: 'is executed after the code block has been executed.',
         },
         correctAnswer: 'd'      
-},
+}
 //     {
 //         question5: "An object can be all of the following except:",
 //         answers: {
@@ -87,38 +88,44 @@ var answer = [];
 // the first questions appears with abcd options
 function renderQuestion () {
     console.log("place on page");
-    var questionText = myQuestions.questionText;
-    var answers = myQuestions.answers;
+    startPage.innerHTML = "";
+    var questionText = myQuestions[0].questionText; // unable to drill down on answers
+    var answerOpt = myQuestions[0].answers; // unable to drill down on answers
+
     // load questions and answers into .questionContainer.
     var questionContainer = document.querySelector('.questionContainer');  
     // questions will show as h2
     var qText = document.createElement("h2");
-    qText.textContent = questionText.textContent;
+    qText.textContent = questionText;
+    console.log(qText)
     // answers will be shown as ordered list
     var answerList = document.createElement("ol");
-    // answers will be in an empty array
-    var answerItems = [];
+    console.log(answerList)
+    
 
     // for loop for answers for each question
-    for(var i=0; i < answers.length; i++) {
+    for(var i=0; i < answerOpt.length; i++) {
         console.log("in answer loop");
+        // answers will be in an empty array
+        var answerItems = [];
         // answers in my array will be listed under ordered list
-        var answerItem = document.createElement("li");
+        var answerReq = document.createElement("li");
         // answerItem will show my correctAnswer
-        answerItems = myQuestions.correctAnswer;
+        answerItems = myQuestions[i].correctAnswer;
         var i = correctAnswer
         answerItems.textContent = i;
-        answerList.append(answerItems);
+        // answerList.append(answerReq);
         console.log(answerList);
-        answerItem.push(answerItems);
+        answerItems.push(answerOpt);
     }
-    questionContainer.append(qText, answerList);
+    questionContainer.append(qText, answerList, answerReq);
+    // startQuiz()
 }
 
 function startQuiz () {
     score = 0
     // timerCount = 55;
-    renderQuestion();
+    // renderQuestion();
     startTimer()
 }
 
@@ -128,7 +135,7 @@ function startTimer() {
     timerCount = 55;
     timer = setInterval(function() {
     timerCount--;
-    timerEl.textContent = timerCount;
+    // timerEl.textContent = timerCount;
     if (timerCount >= 0) {
       
       if (quiz && timerCount > 0) {
@@ -183,4 +190,4 @@ function getWins() {
   }
 
 
-startBtn.addEventListener('click', startQuiz);
+startBtn.addEventListener('click', renderQuestion);
