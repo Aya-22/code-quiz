@@ -12,6 +12,7 @@ var startBtn = document.querySelector('.start-button');
 var initialed = document.querySelector('#initialed-score');
 var timeEl = document.querySelector('.questionTimer');
 var startPage = document.querySelector('.intro');
+var questionContainer = document.querySelector('.questionContainer'); 
 // var question = document.querySelector('.questionContainer');
 
 var myQuestions = [
@@ -88,19 +89,18 @@ var answer = [];
 // the first questions appears with abcd options
 function renderQuestion () {
     console.log("place on page");
-    startPage.innerHTML = "";
+    // question replaces the intro when start button clicked
     var questionText = myQuestions[0].questionText; // unable to drill down on answers
     var answerOpt = myQuestions[0].answers; // unable to drill down on answers
 
     // load questions and answers into .questionContainer.
-    var questionContainer = document.querySelector('.questionContainer');  
+    // var questionContainer = document.querySelector('.questionContainer');  
     // questions will show as h2
     var qText = document.createElement("h2");
     qText.textContent = questionText;
     console.log(qText)
     // answers will be shown as ordered list
     var answerList = document.createElement("ol");
-    console.log(answerList)
     
 
     // for loop for answers for each question
@@ -111,10 +111,11 @@ function renderQuestion () {
         // answers in my array will be listed under ordered list
         var answerReq = document.createElement("li");
         // answerItem will show my correctAnswer
-        answerItems = myQuestions[i].correctAnswer;
+        answerItems = answerOpt
+        // myQuestions[0].correctAnswer;
         var i = correctAnswer
         answerItems.textContent = i;
-        // answerList.append(answerReq);
+        answerList.append(i);
         console.log(answerList);
         answerItems.push(answerOpt);
     }
@@ -190,4 +191,8 @@ function getWins() {
   }
 
 
-startBtn.addEventListener('click', renderQuestion);
+startBtn.addEventListener('click', function() {
+    startPage.classList.add('hidden')
+    questionContainer.classList.remove('hidden')
+    renderQuestion();
+});
