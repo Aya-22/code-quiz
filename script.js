@@ -13,48 +13,30 @@ var initialed = document.querySelector('#initialed-score');
 var timeEl = document.querySelector('.questionTimer');
 var startPage = document.querySelector('.intro');
 var questionContainer = document.querySelector('.questionContainer'); 
+// var answerButton = document.querySelector('answerBtn')
+var submitButton = document.querySelector('question');
 // var question = document.querySelector('.questionContainer');
 
 var myQuestions = [
     {
         questionText: "An object can be all of the following except:",
-        answers: {
-            a:'string',
-            b:'boolean',
-            c:'number',
-            d:'floater',
-        },
-        correctAnswer: 'd'      
+        answers: ['string', 'boolean', 'number', 'floater'],
+        correctAnswer: 'floater'      
 },
     {
         questionText: "What is used after a console log?",
-        answers: {
-            a: 'nothing',
-            b: '{}',
-            c: '()',
-            d: '{}',
-        },
-        correctAnswer: 'c'      
+        answers: ['nothing', '{}', '()', '{}',],
+        correctAnswer: '()'      
 },
     {
         questionText: "Which method adds values to the end of an array?",
-        answers: {
-            a: '.unshift',
-            b: '.pop',
-            c: '.splic',
-            d: '.push',
-        },
-        correctAnswer: 'd'      
+        answers: ['.unshift', '.pop', '.splic','.push',],
+        correctAnswer: '.push'      
 },
     {
         questionText: "What is the 2nd statement of the for loop mean? for(var i=0; i < length; i++)",
-        answers: {
-            a: 'defines the condition for executing the code block.',
-            b: 'is executed before the execution of the code block.',
-            c: 'loops can execute a block code a number of times.',
-            d: 'is executed after the code block has been executed.',
-        },
-        correctAnswer: 'd'      
+        answers: ['defines the condition for executing the code block.', 'is executed before the execution of the code block.', 'loops can execute a block code a number of times.', 'is executed after the code block has been executed.',],
+        correctAnswer: 'is executed after the code block has been executed.'      
 }
 //     {
 //         question5: "An object can be all of the following except:",
@@ -81,17 +63,18 @@ console.log(myQuestions);
 var questionTimer;
 var quiz = true;
 var timer;
-var timerCount;
+var timerCount = 55;
 var score;
 // var isWin = true;
 var answer = [];
+var questionIndex = 0;
 
 // the first questions appears with abcd options
 function renderQuestion () {
     console.log("place on page");
     // question replaces the intro when start button clicked
-    var questionText = myQuestions[0].questionText; // unable to drill down on answers
-    var answerOpt = myQuestions[0].answers; // unable to drill down on answers
+    var questionText = myQuestions[questionIndex].questionText; // unable to drill down on answers
+    var answerOpt = myQuestions[questionIndex].answers; // unable to drill down on answers
 
     // load questions and answers into .questionContainer.
     // var questionContainer = document.querySelector('.questionContainer');  
@@ -100,28 +83,39 @@ function renderQuestion () {
     qText.textContent = questionText;
     console.log(qText)
     // answers will be shown as ordered list
+    questionContainer.append(qText);
     var answerList = document.createElement("ol");
     
 
     // for loop for answers for each question
     for(var i=0; i < answerOpt.length; i++) {
         console.log("in answer loop");
-        // answers will be in an empty array
-        var answerItems = [];
+
         // answers in my array will be listed under ordered list
         var answerReq = document.createElement("li");
         // answerItem will show my correctAnswer
-        answerItems = answerOpt
+        answerReq.textContent = answerOpt[i];
         // myQuestions[0].correctAnswer;
-        var i = correctAnswer
-        answerItems.textContent = i;
-        answerList.append(i);
+        // var i = correctAnswer
+        // answerItems.textContent = i;
+        answerList.append(answerReq);
+        // TODO: add button to each answer
+        var answerButton = document.createElement('button');
+        // answerButton.onclick = submit;
+        answerReq.classList.add('onclick');
+        
         console.log(answerList);
-        answerItems.push(answerOpt);
+
     }
-    questionContainer.append(qText, answerList, answerReq);
-    // startQuiz()
+    questionContainer.append(answerList);
+
+    // TODO: add submit button at the buttom and link to correctAnswer function
+    var submitBtn = document.createElement('button')
+    submitBtn.textContent = "Submit";
+    submitButton.appendChild(submitBtn);
 }
+
+
 
 function startQuiz () {
     score = 0
@@ -133,27 +127,21 @@ function startQuiz () {
 function startTimer() {
     console.log("timer")
     // test timer
-    timerCount = 55;
     timer = setInterval(function() {
     timerCount--;
-    // timerEl.textContent = timerCount;
-    if (timerCount >= 0) {
-      
-      if (quiz && timerCount > 0) {
-        clearInterval(timerCount);
-        correctAnswer();
-      }
-    }
+    timeEl.textContent = "Time: "+ timerCount;
     
-    if (timerCount === 0) {
-        clearInterval(timerCount)
-        wrongAnswer();
+    if (timerCount <= 0) {
+        clearInterval(timer)
+        // add call back for end game function see input where put initials
         
     }
 }, 1000);
 }
 
 // function checkAnswer () {
+// create variable for correct answer
+var 
 
 // }
 
@@ -194,5 +182,7 @@ function getWins() {
 startBtn.addEventListener('click', function() {
     startPage.classList.add('hidden')
     questionContainer.classList.remove('hidden')
+    startQuiz()
     renderQuestion();
+    
 });
