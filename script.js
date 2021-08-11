@@ -100,9 +100,10 @@ function renderQuestion () {
         // answerItems.textContent = i;
         answerList.append(answerReq);
         // TODO: add button to each answer
-        var answerButton = document.createElement('button');
-        // answerButton.onclick = submit;
+        var answerButton = document.createElement("button");
+        // answerButton.textContent = "Submit";
         answerReq.classList.add('onclick');
+        questionContainer.insertBefore(answerReq, child);
         
         console.log(answerList);
 
@@ -110,9 +111,9 @@ function renderQuestion () {
     questionContainer.append(answerList);
 
     // TODO: add submit button at the buttom and link to correctAnswer function
-    var submitBtn = document.createElement('button')
-    submitBtn.textContent = "Submit";
-    submitButton.appendChild(submitBtn);
+    // var submitBtn = document.createElement('button')
+    // submitBtn.textContent = "Submit";
+//     submitButton.nextSibling(submitBtn);
 }
 
 
@@ -139,11 +140,18 @@ function startTimer() {
 }, 1000);
 }
 
-// function checkAnswer () {
+function checkAnswer () {
 // create variable for correct answer
-var 
+var correctAnswers = myQuestions[questionIndex].correctAnswer;
+if (correctAnswers) {
+    correctAnswer();
+} else {
+    wrongAnswer();
+}
 
-// }
+renderQuestion();
+
+}
 
 
 function correctAnswer () {
